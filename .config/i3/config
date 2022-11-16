@@ -264,14 +264,15 @@ bindsym $mod+p exec /usr/local/bin/switch-audio-port
 #bindsym $mod+w exec /usr/bin/google-chrome-stable
 bindsym $mod+w exec /usr/bin/brave
 bindsym $mod+n exec /usr/bin/thunar
-bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
+# bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
+bindsym Print exec flameshot gui
 
 ####################################################################################################
 # configuration for workspace behaviour:                                                           #
 ####################################################################################################
-
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+##
+# Define workspace names
+#
 set $ws1 "1: 1   "
 set $ws2 "2: 2   "
 set $ws3 "3: 3   "
@@ -282,17 +283,17 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
-
-# use workspaces on different displays:
-# where you have to replace VGA-0/HDMI-0 with the names for your displays
-# you can get from xrandr command
-#workspace $ws1 output VGA-0
-#workspace $ws2 output VGA-0
-#workspace $ws3 output HDMI-0
-#workspace $ws4 output HDMI-0
-#workspace $ws5 output HDMI-0
-
-# bind program to workspace and focus to them on startup:
+##
+# Bind workspaces to displays
+#
+workspace $ws1 output DP-4
+workspace $ws2 output DP-1
+workspace $ws3 output DP-4
+workspace $ws4 output DP-1
+workspace $ws5 output DP-1
+##
+# Bind programs to workspaces
+#
 assign [class="Xfce4-terminal"] $ws1
 assign [class="Code"] $ws1
 assign [class="jetbrains-studio"] $ws1
@@ -302,17 +303,18 @@ assign [class="(?i)Brave"] $ws2
 assign [class="Thunar"] $ws3
 assign [class="Thunderbird"] $ws4
 assign [class="TelegramDesktop"] $ws5
-
-
-# automatic set focus new window if it opens on another workspace then the current:
+##
+# Set focus on new window if it opens on another workspace
+#
 for_window [class=Xfce4-terminal] focus
+for_window [class="Code"] focus
+for_window [class="jetbrains-studio"] focus
 for_window [class=(?i)firefox] focus
 for_window [class=(?i)Chrome] focus
 for_window [class=(?i)Brave] focus
 for_window [class=Thunar] focus
 for_window [class=Thunderbird] focus
 for_window [class=TelegramDesktop] focus
-
 ####################################################################################################
 # autostart applications/services on login:                                                        #
 ####################################################################################################
