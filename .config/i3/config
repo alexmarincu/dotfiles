@@ -286,11 +286,11 @@ set $ws10 "10"
 ##
 # Bind workspaces to displays
 #
-workspace $ws1 output DP-4
-workspace $ws2 output DP-1
-workspace $ws3 output DP-4
-workspace $ws4 output DP-1
-workspace $ws5 output DP-1
+#workspace $ws1 output DP-4
+#workspace $ws2 output DP-1
+#workspace $ws3 output DP-4
+#workspace $ws4 output DP-1
+#workspace $ws5 output DP-1
 ##
 # Bind programs to workspaces
 #
@@ -348,6 +348,18 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 # start blueberry app for managing bluetooth devices from tray:
 exec --no-startup-id blueberry-tray
 
+# transparency
+# uncomment one of them to be used (picom package is installed per default)
+# options could need changes, related to used GPU and drivers.
+# to find the right setting consult the archwiki or ask at the forum.
+# xcompmgr: https://wiki.archlinux.org/title/Xcompmgr
+#exec --no-startup-id xcompmgr -C -n &
+# or an more specialized config like this:
+#exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
+# or:
+# picom: https://wiki.archlinux.org/title/Picom
+exec --no-startup-id picom -CGb
+
 # networkmanager-applet
 exec --no-startup-id nm-applet
 
@@ -357,6 +369,9 @@ exec --no-startup-id nitrogen --restore
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
+
+# disable beep sound
+exec --no-startup-id xset -b
 
 # Desktop notifications
 exec --no-startup-id dbus-launch dunst --config ~/.config/dunst/dunstrc
