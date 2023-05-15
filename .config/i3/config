@@ -48,8 +48,8 @@ workspace_layout default
 # extra options for windows:                                                                       #
 ####################################################################################################
 #border indicator on windows:
-new_window pixel 0
-new_float pixel 0
+new_window pixel 3
+new_float pixel 3
 # thin borders
 # hide_edge_borders both
 # Set inner/outer gaps
@@ -428,12 +428,12 @@ set $mediumgrey     #8b8b8b
 set $yellowbrown    #e1b700
 ## define colors for windows:
 #-----------------------------------------------------------------------------------------
-# class                       border      bground     text        indicator   child_border
+# class                       border      bground     text    indicator     child_border
 #-----------------------------------------------------------------------------------------
-  client.focused              $grey       $grey       $darkgrey   $purple     $darkgrey
-  client.unfocused            $darkgrey   $darkgrey   $grey       $purple     $darkgrey
-  client.focused_inactive     $darkgrey   $darkgrey   $grey       $purple     $black
-  client.urgent               $urgentred  $urgentred  $white      $purple     $yellowbrown
+  client.focused              $lightblue  $lightblue  $white  $lightblue    $lightblue
+  client.unfocused            $darkgrey   $darkgrey   $grey   $darkgrey     $darkgrey
+  client.focused_inactive     $darkgrey   $darkgrey   $grey   $darkgrey     $darkgrey
+  client.urgent               $urgentred  $urgentred  $white  $yellowbrown  $yellowbrown
 ####################################################################################################
 # bar settings (input comes from i3blocks)                                                         #
 ####################################################################################################
@@ -493,16 +493,17 @@ bar {
 #		urgent_workspace	$urgentred	$urgentred	$white		$purple
 #	}
 #}
-####################################################################################################
+#==================================================================================================#
 # Application menu handled by rofi:                                                                #
-####################################################################################################
-## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
+#==================================================================================================#
+# rofi binding for fancy application menu:
 bindsym $mod+d exec rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
-#bindsym F9 exec rofi -modi drun -show drun \
-#		-config ~/.config/rofi/rofidmenu.rasi
-## rofi bindings for window menu ($mod+t /F10 optional disabled)
+    -config ~/.config/rofi/rofidmenu.rasi
+
+# rofi binding for calc mode:
+bindsym $mod+c exec rofi -show calc -modi calc -no-show-match -no-sort \
+    -config ~/.config/rofi/rofidmenu.rasi
+
+# rofi binding for window menu:
 bindsym $mod+t exec rofi -show window \
-		-config ~/.config/rofi/rofidmenu.rasi
-#bindsym F10 exec rofi -show window \
-#		-config ~/.config/rofi/rofidmenu.rasi
+    -config ~/.config/rofi/rofidmenu.rasi
