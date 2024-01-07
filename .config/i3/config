@@ -24,7 +24,7 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango: JetbrainsMono NF 0
+font pango: JetbrainsMono NF 9
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -51,8 +51,8 @@ workspace_layout default
 # extra options for windows:                                                                       #
 ####################################################################################################
 #border indicator on windows:
-new_window pixel 4
-new_float pixel 4
+new_window pixel 3
+new_float pixel 3
 # thin borders
 # hide_edge_borders both
 # Set inner/outer gaps
@@ -270,43 +270,45 @@ bindsym $mod+n exec /usr/bin/thunar
 # bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
 bindsym Print exec flameshot gui
 
-# Scratchpad
-bindsym $mod+u [title="quickterm"] scratchpad show; [title="quickterm"] move position center
-
-####################################################################################################
-# configuration for workspace behaviour:                                                           #
-####################################################################################################
-##
-# Define workspace names
-#
-set $ws1 "1: 1 "
-set $ws2 "2: 2 "
-set $ws3 "3: 3 "
-set $ws4 "4: 4 "
+# Workspaces -------------------------------------------------------------------
+set $ws1 "1: 1  "
+set $ws2 "2: 2 󰖟 "
+set $ws3 "3: 3  "
+set $ws4 "4: 4  "
 set $ws5 "5: 5 "
 set $ws6 "6: 6 "
 set $ws7 "7: 7 "
 set $ws8 "8: 8 "
 set $ws9 "9: 9 "
 set $ws10 "10: 10 "
-##
-# Bind workspaces to displays
-#
-workspace $ws1 output DP-4
-workspace $ws2 output DP-1
-# workspace $ws3 output DP-4
-# workspace $ws4 output DP-1
-# workspace $ws5 output DP-1
+
+# Monitor defs -----------------------------------------------------------------
+set $primaryMonitor DP-1
+set $secondaryMonitor DP-4
+
+# Workspace monitor bindings ---------------------------------------------------
+workspace $ws1 output $primaryMonitor
+workspace $ws2 output $secondaryMonitor
+workspace $ws3 output $primaryMonitor
+workspace $ws4 output $secondaryMonitor
+workspace $ws5 output $primaryMonitor
+workspace $ws6 output $secondaryMonitor
+workspace $ws7 output $primaryMonitor
+workspace $ws8 output $secondaryMonitor
+workspace $ws9 output $primaryMonitor
+workspace $ws10 output $secondaryMonitor
+
 ##
 # Bind programs to workspaces
 #
 # assign [class="Xfce4-terminal"] $ws1
-# assign [class="Code"] $ws1
-# assign [class="jetbrains-studio"] $ws1
-# assign [class="(?i)firefox"] $ws2
-# assign [class="(?i)Chrome"] $ws2
-# assign [class="(?i)Brave"] $ws2
-# assign [class="Thunar"] $ws3
+assign [class="Code"] $ws1
+assign [class="jetbrains-studio"] $ws1
+assign [class="(?i)firefox"] $ws2
+assign [class="(?i)Chrome"] $ws2
+assign [class="(?i)Brave"] $ws2
+assign [class="Thunar"] $ws3
+assign [class="(?i)youtubemusic"] $ws4
 # assign [class="Thunderbird"] $ws4
 # assign [class="TelegramDesktop"] $ws5
 ##
@@ -319,12 +321,11 @@ for_window [class=(?i)firefox] focus
 for_window [class=(?i)Chrome] focus
 for_window [class=(?i)Brave] focus
 for_window [class=Thunar] focus
+for_window [class="(?i)youtubemusic"] focus
 for_window [class=Thunderbird] focus
 for_window [class=TelegramDesktop] focus
-####################################################################################################
-# autostart applications/services on login:                                                        #
-####################################################################################################
 
+# Autostart applications/services on login -------------------------------------
 #get auth work with polkit-gnome
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
@@ -336,66 +337,43 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
 
-# start welcome app
-#exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
-
 # num lock activated
 #exec --no-startup-id numlockx on
 # configure multiple keyboard layouts and hotkey to switch (Alt+CAPSLOCK in this example)
 #exec --no-startup-id setxkbmap -layout 'us,sk' -variant altgr-intl,qwerty -option 'grp:alt_caps_toggle'
 
 # start conky:
-#exec_always --no-startup-id conky
+# exec_always --no-startup-id conky
 
-# start a script to setup displays
-# uncomment the next line, use arandr to setup displays and save the file as monitor:
+# Monitor layout
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
-# start blueberry app for managing bluetooth devices from tray:
+# Bluetooth
 exec --no-startup-id blueberry-tray
 
-# networkmanager-applet
+# Network manager
 exec --no-startup-id nm-applet
 
-# set wallpaper
+# Wallpaper
 exec --no-startup-id nitrogen --restore
-#exec --no-startup-id feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros_i3.png
 
-# set powersavings for display:
+# Powersavings for display
 exec --no-startup-id xset s 480 dpms 600 600 600
 
 # Desktop notifications
 # exec --no-startup-id dbus-launch dunst --config ~/.config/dunst/dunstrc
-# alternative if you installed aside with XFCE4:
 # exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
-# rclone gdrive
+# Rclone gdrive
 exec --no-startup-id rclone mount gdrive-me: /home/alex/rclone/gdrive-me/
 
-# Autostart apps as you like
-#exec --no-startup-id sleep 2 && xfce4-terminal
-#exec --no-startup-id sleep 7 && firefox https://github.com/endeavouros-team/endeavouros-i3wm-setup/blob/main/force-knowledge.md
-#exec --no-startup-id sleep 3 && thunar
-## Launch Polybar
-# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-# transparency
-# uncomment one of them to be used (picom package is installed per default)
-# options could need changes, related to used GPU and drivers.
-# to find the right setting consult the archwiki or ask at the forum.
-# xcompmgr: https://wiki.archlinux.org/title/Xcompmgr
-#exec --no-startup-id xcompmgr -C -n &
-# or an more specialized config like this:
-#exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
-# or:
-# picom: https://wiki.archlinux.org/title/Picom
-#exec --no-startup-id picom -CGb
+# Transparency
 exec --no-startup-id picom --experimental-backends
-# set floating (nontiling)for apps needing it
+
+# Floating apps ----------------------------------------------------------------
 for_window [class="Yad" instance="yad"] floating enable
 for_window [class="Galculator" instance="galculator"] floating enable
 for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-
-# set floating (nontiling) for special apps
 for_window [class="Xsane" instance="xsane"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="qt5ct" instance="qt5ct"] floating enable
@@ -403,110 +381,85 @@ for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
 for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
 for_window [class="Pamac-manager"] floating enable
 
-# Terminal scratchpad
+# Terminal scratchpad ----------------------------------------------------------
+exec --no-startup-id $term --title=quickterm
 for_window [title="quickterm"] floating enable
 for_window [title="quickterm"] resize set 800 600
 for_window [title="quickterm"] move scratchpad
 for_window [title="quickterm"] border pixel 5
-exec --no-startup-id $term --title=quickterm
+bindsym $mod+u [title="quickterm"] scratchpad show; [title="quickterm"] move position center
 
-####################################################################################################
-# color settings for bar and windows                                                               #
-####################################################################################################
-## Define colors variables:
-set $darkbluetrans  #08052be6
-set $darkblue       #08052b
-set $lightblue      #5294e2
-set $urgentred      #e53935
-set $white          #ffffff
-set $black          #000000
-set $purple         #e345ff
-set $darkgrey       #383c4a
-set $grey           #b0b5bd
-set $mediumgrey     #8b8b8b
-set $yellowbrown    #e1b700
+## Colors defs -----------------------------------------------------------------
+set $darkbluetrans #08052be6
+set $darkblue      #08052b
+set $lightblue     #5294e2
+set $urgentred     #e53935
+set $white         #ffffff
+set $black         #000000
+set $purple        #e345ff
+set $darkgrey      #383c4a
+set $grey          #b0b5bd
+set $mediumgrey    #8b8b8b
+set $yellowbrown   #e1b700
 
-## define colors for windows:
-#------------------------------------------------------------------------------------
-# class                 border      bground     text        indicator    child_border
-#------------------------------------------------------------------------------------
-client.focused          $lightblue  $lightblue  $lightblue  $lightblue   $lightblue
-client.unfocused        $mediumgrey $mediumgrey $mediumgrey $mediumgrey  $mediumgrey
-client.focused_inactive $mediumgrey $mediumgrey $mediumgrey $mediumgrey  $mediumgrey
-client.urgent           $urgentred  $urgentred  $urgentred  $urgentred   $urgentred
-#------------------------------------------------------------------------------------
+# Window theme -----------------------------------------------------------------
+#                       border      background  text   indicator    childBorder
+client.focused          $lightblue  $lightblue  $white $lightblue   $lightblue
+client.unfocused        $mediumgrey $mediumgrey $white $mediumgrey  $mediumgrey
+client.focused_inactive $mediumgrey $mediumgrey $white $mediumgrey  $mediumgrey
+client.urgent           $urgentred  $urgentred  $white $urgentred   $urgentred
 
-####################################################################################################
-# bar settings (input comes from i3blocks)                                                         #
-####################################################################################################
-# Start i3bar to display a workspace bar
-# (plus the system information i3status finds out, if available)
+# Primary bar ------------------------------------------------------------------
 bar {
     font pango: JetbrainsMono NF 9
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
     position top
-    #i3bar_command i3bar --transparency
-    # it could be that you have no primary display set: set one (xrandr --output <output> --primary)
-    # reference: https://i3wm.org/docs/userguide.html#_tray_output
-    tray_output primary
-    tray_padding 7
+    output $primaryMonitor
     padding 5
-    # When strip_workspace_numbers is set to yes,
-    # any workspace that has a name of the form
-    # “[n][:][NAME]” will display only the name.
+    tray_output $primaryMonitor
+    tray_padding 7
     strip_workspace_numbers yes
-    #strip_workspace_name no
     colors {
-        separator             $purple
-        background            $darkgrey
-        statusline            $white
-        #                     border         bg             txt          indicator
-        focused_workspace     $grey          $grey          $darkgrey    $purple
-        active_workspace      $mediumgrey    $mediumgrey    $darkgrey    $purple
-        inactive_workspace    $darkgrey      $darkgrey      $grey        $purple
-        urgent_workspace      $urgentred     $urgentred     $white       $purple
+        separator          $purple
+        background         $darkgrey
+        statusline         $white
+        #                  border      bg          txt       indicator
+        focused_workspace  $grey       $grey       $darkgrey $purple
+        active_workspace   $mediumgrey $mediumgrey $darkgrey $purple
+        inactive_workspace $darkgrey   $darkgrey   $grey     $purple
+        urgent_workspace   $urgentred  $urgentred  $white    $purple
     }
 }
-# you can add different bars for multidisplay setups on each display:
-# set output HDMI-0 to the display you want the bar, --transparency can be set.
-# Transparency needs rgba color codes to be used where the last two letters are the transparency factor see here:
-# https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
-# #08052be6 --> e6=90%
-# bar {
-#	font pango:JetbrainsMono NF 10
-#	status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
-#	i3bar_command i3bar --transparency
-#	output HDMI-0
-#	position bottom
-#
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-#strip_workspace_numbers yes
-##strip_workspace_name no
-#
-#	colors {
-#		separator          $purple
-#		background         $darkbluetrans
-#        	statusline         $white
-#					border		bg		txt		indicator
-#		focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
-#		active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
-#		inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
-#		urgent_workspace	$urgentred	$urgentred	$white		$purple
-#	}
-#}
-#==================================================================================================#
-# Application menu handled by rofi:                                                                #
-#==================================================================================================#
-# rofi binding for fancy application menu:
+
+# Secondary bar ----------------------------------------------------------------
+bar {
+    font pango:JetbrainsMono NF 9
+    position top
+    output $secondaryMonitor
+    padding 5
+    tray_output none
+    strip_workspace_numbers yes
+    colors {
+        separator          $purple
+        background         $darkgrey
+        statusline         $white
+        #                  border      bg          txt       indicator
+        focused_workspace  $grey       $grey       $darkgrey $purple
+        active_workspace   $mediumgrey $mediumgrey $darkgrey $purple
+        inactive_workspace $darkgrey   $darkgrey   $grey     $purple
+        urgent_workspace   $urgentred  $urgentred  $white    $purple
+    }
+}
+
+# Rofi bindings ----------------------------------------------------------------
+# App menu
 bindsym $mod+d exec rofi -modi drun -show drun \
     -config ~/.config/rofi/rofidmenu.rasi
 
-# rofi binding for calc mode:
+# Calc mode
 bindsym $mod+c exec rofi -show calc -modi calc -no-show-match -no-sort \
     -config ~/.config/rofi/rofidmenu.rasi
 
-# rofi binding for window menu:
+# Window menu
 bindsym $mod+t exec rofi -show window \
     -config ~/.config/rofi/rofidmenu.rasi
